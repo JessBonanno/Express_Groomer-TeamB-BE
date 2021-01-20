@@ -1,7 +1,7 @@
 const db = require('../../data/db-config');
 
-const create = async (filename) => {
-  return await db('profiles').insert(filename).returning('*');
+const update = async (location) => {
+  return await db('profiles').insert(location).returning('*');
 };
 
-module.exports = create;
+module.exports = update;
