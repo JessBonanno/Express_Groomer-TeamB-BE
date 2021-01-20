@@ -2,7 +2,7 @@ const express = require('express');
 const authRequired = require('../middleware/authRequired');
 const Profiles = require('./profileModel');
 const router = express.Router();
-const uploadFile = require('../filehandling/fileRouting');
+const fileRouter = require('../filehandling/fileRouting');
 
 router.all('/', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', process.env.CORS_ORIGIN);
@@ -179,6 +179,12 @@ router.post('/', authRequired, async (req, res) => {
               .status(200)
               .json({ message: 'profile created', profile: profile[0] })
           );
+          // Needs file content passed to it from the front end.
+          await fileRouter
+            .uploadFile(profile.id, profile.fileContent)
+            .then(async () => {
+              res.status(200).json({ message: 'File uploaded successuflly' });
+            });
         } else {
           res.status(400).json({ message: 'profile already exists' });
         }

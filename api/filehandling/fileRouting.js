@@ -3,7 +3,6 @@ const router = express.Router();
 const fs = require('fs');
 const AWS = require('aws-sdk');
 const fileUpload = require('./fileModel');
-const { json } = require('express');
 require('dotenv');
 
 const aws_id = process.env.AWS_ID;
@@ -15,9 +14,9 @@ const s3 = new AWS.S3({
   secretAccessKey: aws_secret,
 });
 
-const uploadFile = (id, fileName) => {
+const uploadFile = (userId, fileContent) => {
   // Read content from the file
-  const fileContent = fs.readFileSync(fileName);
+  // const fileContent = fs.readFileSync(fileName);
 
   // Setting up S3 upload parameters
   const params = {
